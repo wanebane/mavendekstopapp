@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package id.rivaldy.mvnfirst;
+package com.mycompany.mvnfirst;
 
 import com.mycompany.mavenappdesktop.LatestConversion;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,8 @@ public class ExchangeApplication extends javax.swing.JFrame {
 
     Currency sourceCurrency;
     Currency targetCurrency;
-LatestConversion latest;
+    LatestConversion latest;
+
     /**
      * Creates new form ExchangeApplication
      */
@@ -33,11 +34,13 @@ LatestConversion latest;
         initComponents();
         getCurrenciesConvertInWorld();
     }
-    private DefaultComboBoxModel getComboboxData(){
+
+    private DefaultComboBoxModel getComboboxData() {
         List<Currency> curList = toList();
         return new DefaultComboBoxModel(curList.toArray());
     }
-    private List<Currency> toList(){
+
+    private List<Currency> toList() {
         List<Currency> curList = new ArrayList<Currency>();
         Map<String, String> curMap = getCurrencyFromWebServices();
         Set<String> keys = curMap.keySet();
@@ -46,25 +49,26 @@ LatestConversion latest;
         }
         return curList;
     }
-    private Map<String, String> getCurrencyFromWebServices(){
+
+    private Map<String, String> getCurrencyFromWebServices() {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, String> curMap = restTemplate.getForObject("https://openexchangerates.org/api/currencies.json", Map.class);
         return curMap;
     }
-    
-     private String getUangDari(String froms){
-        String[]data = froms.split("-");
+
+    private String getUangDari(String froms) {
+        String[] data = froms.split("-");
         String from = data[0];
         return from;
     }
-    
-    private String getUangKe(String froms){
-        String[]data = froms.split("-");
+
+    private String getUangKe(String froms) {
+        String[] data = froms.split("-");
         String from = data[0];
         return from;
     }
-    
-    private void getCurrenciesConvertInWorld(){
+
+    private void getCurrenciesConvertInWorld() {
         String url = "https://openexchangerates.org/api/latest.json?app_id=9971e55b38854948a88c9d1cb6814cc6";
         RestTemplate restTemplate = new RestTemplate();
         latest = restTemplate.getForObject(url, LatestConversion.class);
@@ -86,11 +90,14 @@ LatestConversion latest;
         toCombobox = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         uangtxt = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        convertButton = new javax.swing.JButton();
         hasiltxt = new javax.swing.JTextField();
         updateLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, " Money Convertion", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Cambria Math", 1, 16))); // NOI18N
 
         jLabel1.setText("From Currency");
 
@@ -112,14 +119,18 @@ LatestConversion latest;
 
         jLabel3.setText("Total");
 
-        jButton1.setText("Convert");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        convertButton.setText("Convert");
+        convertButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                convertButtonActionPerformed(evt);
             }
         });
 
-        updateLabel.setText("Update: ");
+        hasiltxt.setEditable(false);
+
+        updateLabel.setText("Update :");
+
+        jLabel4.setText("Convert");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -128,40 +139,46 @@ LatestConversion latest;
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(updateLabel)
-                    .addComponent(uangtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(hasiltxt, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(toCombobox, javax.swing.GroupLayout.Alignment.LEADING, 0, 170, Short.MAX_VALUE)
-                        .addComponent(fromCombobox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(233, Short.MAX_VALUE))
+                        .addComponent(fromCombobox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(convertButton))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(updateLabel)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3)
+                        .addComponent(hasiltxt, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                        .addComponent(uangtxt))
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fromCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fromCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(uangtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(toCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(uangtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(hasiltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(updateLabel)
-                .addGap(68, 68, 68))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(toCombobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hasiltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateLabel)
+                    .addComponent(convertButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,7 +215,7 @@ LatestConversion latest;
 //        System.out.println("Target Currency : "+targetCurrency);
     }//GEN-LAST:event_toComboboxActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void convertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_convertButtonActionPerformed
         // TODO add your handling code here:
         String from = getUangDari(fromCombobox.getSelectedItem().toString());
         String ke = getUangKe(toCombobox.getSelectedItem().toString());
@@ -206,8 +223,8 @@ LatestConversion latest;
         Double hasil = latest.getConvertionResult(from, ke, uang);
         String fmt = String.format(ke + " %,.2f", hasil);
         hasiltxt.setText(fmt);
-        updateLabel.setText("Updates On: " + latest.getLastDate());
-    }//GEN-LAST:event_jButton1ActionPerformed
+        updateLabel.setText("Update : " + latest.getLastDate());
+    }//GEN-LAST:event_convertButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,12 +262,13 @@ LatestConversion latest;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton convertButton;
     private javax.swing.JComboBox<String> fromCombobox;
     private javax.swing.JTextField hasiltxt;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> toCombobox;
     private javax.swing.JTextField uangtxt;

@@ -1,4 +1,4 @@
-package id.rivaldy.mvnfirst;
+package com.mycompany.mvnfirst;
 
 /**
  *

@@ -35,15 +35,15 @@ public class LatestConversion {
         this.timestamp = timestamp;
         this.base = base;
     }
-    
-    public Double getConvertToUSD(String from, Double uang){
+
+    public Double getConvertToUSD(String from, Double uang) {
         Double res = 0.0;
         Double fromUang = rates.get(from);
         res = uang / fromUang;
         return res;
     }
-    
-    public Double getConvertionResult(String from, String ke, Double uang){
+
+    public Double getConvertionResult(String from, String ke, Double uang) {
         Double res = 0.0;
         Double toUang = rates.get(ke);
         Double usdBase = getConvertToUSD(from, uang);
